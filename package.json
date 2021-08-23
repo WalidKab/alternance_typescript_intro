@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "reload": "nodemon -I"
+    "reload": "nodemon -I",
+    "dev": "npx tsc && node build/index.js"
   },
   "repository": {
     "type": "git",
