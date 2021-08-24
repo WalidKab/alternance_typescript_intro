@@ -1,17 +1,20 @@
 import {Enemy} from "./enemy";
 import {Fighter} from "../Interface/fighter";
+import {Weapon} from "./weapon";
 
 export abstract class Character implements Fighter<Character>{
     name : string;
     gender : string;
     lifePoints : number;
     attackPoints : number;
+    weapon : Weapon;
 
-    protected constructor(name : string, gender : string) {
+    protected constructor(name : string, gender : string, weapon : Weapon) {
         this.name = name;
         this.gender =  gender;
         this.lifePoints = 50;
         this.attackPoints =  Math.floor(Math.random() * 100) + 1;
+        this.weapon = weapon;
     }
 
     summary(){
@@ -20,8 +23,8 @@ export abstract class Character implements Fighter<Character>{
 
     attack(fighter: Enemy){
         console.log(fighter.summary());
-        console.log("Tu inflige " + this.attackPoints + " points de dégat à l'ennemi");
-        fighter.lifePoints -= this.attackPoints;
+        console.log("Tu inflige " + this.attackPoints + " points de dégat à l'ennemi et " + this.weapon.damage + " points grace à ton arme");
+        fighter.lifePoints -= (this.attackPoints + this.weapon.damage );
         console.log(fighter.summary());
     }
 

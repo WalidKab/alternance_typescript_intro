@@ -21,6 +21,15 @@ export const questions = [
             {title: 'Guerrier', value: "Guerrier"},
             {title: 'Magicien', value: "Magicien"},
         ],
+    },
+    {
+        type: 'select',
+        name: 'weaponChosen',
+        message: 'Quelle arme veux-tu porter?',
+        choices: [
+            {title: 'Une épée', value: "Epée"},
+            {title: 'Arc', value: "Arc"},
+        ],
     }
 ];
 

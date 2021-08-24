@@ -1,9 +1,9 @@
-class Weapon{
-    weaponName : string;
+export abstract class Weapon{
+    name : string;
     damage : number;
 
-    constructor() {
-        this.weaponName = "Epée de Damoclès";
-        this.damage = 10;
+    protected constructor(name:string, damage:number) {
+        this.name = name;
+        this.damage = damage;
     }
 }
