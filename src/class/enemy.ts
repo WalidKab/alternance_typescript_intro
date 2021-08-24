@@ -1,12 +1,13 @@
 import {Character} from "./character";
+import {Fighter} from "../Interface/fighter";
 
-export class Enemy {
+export class Enemy implements Fighter<Enemy>{
     name: string;
     attackPoints: number;
     lifePoints: number;
 
     constructor() {
-        this.name = "La Gobeline";
+        this.name = "L'elfe riche";
         this.attackPoints = Math.floor(Math.random() * 100) + 1;
         this.lifePoints = 50;
     }
@@ -15,10 +16,13 @@ export class Enemy {
         return "Attention, un ennemi : " + this.name + " dispose de " + this.attackPoints + " points d'attaque et de " + this.lifePoints + " points de vie";
     }
 
-    attack(character: Character) {
-        console.log(character.summary());
-        console.log("L'ennemi vous inflige " + this.attackPoints + " points de dégat");
-        character.lifePoints -= this.attackPoints;
-        console.log(character.summary());
+    attack(fighter: Character) {
+        console.log(fighter.summary());
+        console.log("L'ennemi t'as infligé " + this.attackPoints + " points de dégat");
+        fighter.lifePoints -= this.attackPoints;
+        console.log(fighter.summary());
+    }
+
+    takeDamage(damage: number): any {
     }
 }

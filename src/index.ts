@@ -1,36 +1,21 @@
 import {Character} from "./class/character";
 import {Enemy} from "./class/enemy";
+import {fightQuestion, questions} from "./prompts";
+import {Warrior} from "./class/warrior";
+import {Wizard} from "./class/wizard";
 
 const prompts = require('prompts');
 
-const questions = [
-    {
-        type: 'text',
-        name: 'name',
-        message: 'Quel est le nom de votre personnage?'
-    },
-    {
-        type: 'select',
-        name: 'gender',
-        message: 'Quel est le genre de votre personnage?',
-        choices: [
-            {title: 'Féminin', value: "Féminin"},
-            {title: 'Masculin', value: "Masculin"},
-        ],
+function choosenType(choice:string, name:string, gender:string){
+    let choosenClass:Character;
+    if (choice== "Guerrier"){
+        choosenClass = new Warrior(name, gender);
     }
-];
-
-const fightQuestion = [
-    {
-        type: 'select',
-        name: 'fightChoice',
-        message: 'Que veux-tu faire?',
-        choices: [
-            {title: 'Combattre', value: 1},
-            {title: 'Fuir', value: 2},
-        ],
+    else {
+        choosenClass = new Wizard(name, gender);
     }
-];
+    return choosenClass;
+}
 
 function fight(choice: number, character: Character) {
     if (choice == 1) {
@@ -62,7 +47,7 @@ function fight(choice: number, character: Character) {
 
 (async () => {
     const response = await prompts(questions);
-    const playerCharacter = new Character(response.name, response.gender);
+    const playerCharacter = choosenType(response.characterType, response.name, response.gender);
     console.log(playerCharacter.summary());
     console.log('Prends garde! Un ennemi approche!');
 

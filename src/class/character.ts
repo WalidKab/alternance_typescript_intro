@@ -1,13 +1,13 @@
 import {Enemy} from "./enemy";
+import {Fighter} from "../Interface/fighter";
 
-export class Character{
+export abstract class Character implements Fighter<Character>{
     name : string;
     gender : string;
     lifePoints : number;
     attackPoints : number;
 
-
-    constructor(name : string, gender : string) {
+    protected constructor(name : string, gender : string) {
         this.name = name;
         this.gender =  gender;
         this.lifePoints = 50;
@@ -15,13 +15,17 @@ export class Character{
     }
 
     summary(){
-        return this.name + " vous êtes un personnage " + this.gender + " Vous disposez de " + this.lifePoints + " points de vie";
+        return this.name + " tu es un personnage " + this.gender + " Tu dispose de " + this.lifePoints + " points de vie";
     }
 
-    attack(enemy: Enemy){
-        console.log(enemy.summary());
-        console.log("Vous infliger " + this.attackPoints + " points de dégat");
-        enemy.lifePoints -= this.attackPoints;
-        console.log(enemy.summary());
+    attack(fighter: Enemy){
+        console.log(fighter.summary());
+        console.log("Tu inflige " + this.attackPoints + " points de dégat à l'ennemi");
+        fighter.lifePoints -= this.attackPoints;
+        console.log(fighter.summary());
+    }
+
+    takeDamage(damage: number) {
+        throw new Error("Method not implemented.");
     }
 }
