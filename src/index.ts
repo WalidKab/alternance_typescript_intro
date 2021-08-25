@@ -7,6 +7,7 @@ import {Weapon} from "./class/weapon";
 import {Sword} from "./class/sword";
 import {Bow} from "./class/bow";
 
+const axios = require('axios').default;
 const prompts = require('prompts');
 
 function chosenType(choice: string, name: string, gender: string, weapon:Weapon) {
@@ -30,7 +31,7 @@ function choosenWeapon(choice : string){
     return chosenWeapon;
 }
 
-function fight(choice: number, character: Character) {
+async function fight(choice: number, character: Character) {
     if (choice == 1) {
         const enemy = new Enemy();
         console.log("Le combat va commencer");
@@ -52,7 +53,18 @@ function fight(choice: number, character: Character) {
             console.log("Tu es mort");
         }
     } else {
-        console.log("Tu fuis, la partie s'arrête ici")
+        // await apiMessage();
+        console.log("heyheyehey")
+    }
+
+}
+
+async function apiMessage() {
+    try {
+        const response = await axios.get('https://kaamelott.hotentic.com/api/random/personnage/Le%20Ma%C3%AEtre%20d\'Armes');
+        console.log(response.data.citation.citation);
+    } catch (error) {
+        console.error(error);
     }
 }
 
@@ -62,8 +74,17 @@ function fight(choice: number, character: Character) {
     const playerCharacter = chosenType(response.characterType, response.name, response.gender, playerWeapon);
     console.log(playerCharacter.weapon.name)
     console.log(playerCharacter.summary());
-    console.log('Prends garde! Un ennemi approche!');
-
-    const fightResponse = await prompts(fightQuestion);
-    fight(fightResponse.fightChoice, playerCharacter);
+    let gameIsRunning = 1;
+    do {
+        console.log('Prends garde! Un ennemi approche!');
+        const fightResponse = await prompts(fightQuestion);
+        if (fightResponse.fightChoice == 2){
+            await apiMessage();
+            gameIsRunning = 0;
+        }
+        else{
+            fight(fightResponse.fightChoice, playerCharacter);
+        }
+    }
+    while (playerCharacter.lifePoints > 0 && gameIsRunning == 1 );
 })();
